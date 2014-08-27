@@ -1,0 +1,25 @@
+<div>Welcome: <%= current_user.name %></div>
+
+<h1>Reserva de Sala</h1>
+
+<div class="scheduler">
+  <div class="time">
+    Horário
+    <ul>
+      <li>06:00</li>
+      <li>07:00</li>
+      <li>08:00</li>
+      <li>09:00</li>
+    </ul>
+  </div>
+
+  <div class="weekday">
+    Segunda
+    <ul>
+      <li><%= link_to 'Disponivel', '#' %></li>
+      <li><%= link_to 'Disponivel', '#' %></li>
+      <li><%= link_to 'Disponivel', '#' %></li>
+      <li><%= link_to 'Disponivel', '#' %></li>
+    </ul>
+  </div>
+</div>
