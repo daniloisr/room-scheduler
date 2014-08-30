@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20140826114529) do
   create_table "schedules", force: true do |t|
     t.integer  "user_id"
     t.datetime "init"
-    t.datetime "end"
+    t.datetime "finish"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

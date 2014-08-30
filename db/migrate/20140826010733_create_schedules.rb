@@ -3,7 +3,7 @@ class CreateSchedules < ActiveRecord::Migration
     create_table :schedules do |t|
       t.integer :user_id
       t.datetime :init
-      t.datetime :end
+      t.datetime :finish
 
       t.timestamps
     end
