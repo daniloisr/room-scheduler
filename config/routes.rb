@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   resource :scheduler, only: :show
-  resource :session,
-    only: [:new, :create, :destroy],
-    path_names: { new: 'login', destroy: 'logout' }
+  resource :session, only: [], path: '' do
+    #https://github.com/plataformatec/devise/blob/master/lib/devise/rails/routes.rb#L359
+    get :new, path: 'login', as: 'new'
+    post :create, path: 'login'
+    match :destroy, path: 'logout', via: [:post, :delete]
+  end
 
-  root 'scheduler#index'
+  root 'schedulers#show'
 end

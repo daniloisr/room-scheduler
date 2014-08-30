@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def check_login
-    redirect_to login_path if session[:user_id].blank?
+    redirect_to new_session_path if session[:user_id].blank?
   end
 
   def current_user
