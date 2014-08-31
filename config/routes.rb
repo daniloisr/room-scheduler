@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resource :scheduler, only: :show
+  resource :scheduler, only: [:show, :create, :destroy]
+
   resource :session, only: [], path: '' do
     #https://github.com/plataformatec/devise/blob/master/lib/devise/rails/routes.rb#L359
     get :new, path: 'login', as: 'new'

@@ -12,9 +12,9 @@ class Schedule < ActiveRecord::Base
 
   def valid_time
     return if init.nil? || finish.nil?
-    if init < begin_of_week || init > end_of_week
+    if init < beginning_of_week || init > end_of_week
       errors.add(:init, "Deve ser no périodo desta semana")
-    elsif finish < begin_of_week || finish > end_of_week
+    elsif finish < beginning_of_week || finish > end_of_week
       errors.add(:finish, "Deve ser no périodo desta semana")
     elsif finish < init
       errors.add(:finish, "Deve ser maior que a data de início")
@@ -22,11 +22,15 @@ class Schedule < ActiveRecord::Base
   end
 
   def end_of_week
-    DateTime.now.end_of_week - 2.days
+    dtime = DateTime.now
+    dtime += 2.days if [0, 6].include?(dtime.wday)
+    dtime.end_of_week - 1.day
   end
 
-  def begin_of_week
-    DateTime.now.beginning_of_week
+  def beginning_of_week
+    dtime = DateTime.now
+    dtime += 2.days if [0, 6].include?(dtime.wday)
+    dtime.beginning_of_week
   end
 
   def available_days
@@ -41,9 +45,13 @@ class Schedule < ActiveRecord::Base
     where('? <= init AND finish <= ?', dtime.beginning_of_day, dtime.end_of_day)
   }
 
+  scope :by_hour, ->(hour) {
+    where("strftime('%H', init) = ?", "%02d" % hour)
+  }
+
   scope :by_week, ->(dtime) {
     # if dtime if on saturday of sunday, move to monday
-    dtime += 2.day if [0, 6].include?(dtime.wday)
+    dtime += 2.days if [0, 6].include?(dtime.wday)
     where('? <= init AND finish <= ?', dtime.beginning_of_week, dtime.end_of_week)
   }
 

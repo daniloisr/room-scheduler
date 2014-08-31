@@ -5,6 +5,6 @@ FactoryGirl.define do
 
   factory :schedule do
     user
-    init { DateTime.now.beginning_of_week }
+    init { Schedule.new.beginning_of_week + 6.hours }
   end
 end
