@@ -9,7 +9,7 @@ describe 'Scheduler Screen' do
     expect(page).to have_content("Reserva")
 
     expect { Schedule.count
-      find('.wday-1 .hour-6').click_link("Disponível")
+      find('.wday-1.hour-6').click_link("Disponível")
      }.to change{ Schedule.count }.by(1)
 
     expect(page).to have_content("Reservado por #{user.name}")

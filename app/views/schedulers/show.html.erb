@@ -1,44 +1,45 @@
-<div>Welcome: <%= current_user.name %></div>
+<div class="container" role="main">
+  <div>Welcome: <%= current_user.name %></div>
 
-<h1>Reserva de Sala</h1>
+  <h1>Reserva de Sala</h1>
 
-<div class="scheduler">
-  <div class="time">
-    Horário
-    <ul>
-      <% (6..23).each do |hour| %>
-        <%= content_tag :li, "%02d:00" % hour %>
+  <table class="table table-striped">
+    <thead>
+      <th><%= t('.time') %></th>
+      <% (1..5).each do |wday| %>
+        <%= content_tag :th, t('date.day_names')[wday] %>
       <% end %>
-    </ul>
-  </div>
+    </thead>
 
-  <% (1..5).each do |wday| %>
-    <div class="weekday wday-<%= wday %>">
-      <%= t('date.day_names')[wday] %>
-      <ul>
-        <% (6..23).each do |hour| %>
-          <% schedule = Schedule.by_day(
-            Schedule.new.beginning_of_week + (wday - 1)).
-            by_hour(hour) %>
+    <tbody>
+      <% (6..23).each do |hour| %>
+        <tr>
+          <%= content_tag :td, "%02d:00" % hour %>
 
-          <% if schedule.any? %>
-            <%= content_tag :li, link_to("Reservado por #{schedule.first. user.name}", '#')  %>
-          <% else %>
-            <%= content_tag :li, link_to("Disponível", '#'),
-              class: "hour-#{hour}",
-              onclick: 'reserve(this)',
-              data: { wday: wday, hour: hour } %>
+          <% (1..5).each do |wday| %>
+            <% schedule = Schedule.by_day(
+              Schedule.new.beginning_of_week + (wday - 1)).
+              by_hour(hour) %>
+
+            <% if schedule.any? %>
+              <%= content_tag :td, link_to("Reservado por #{schedule.first. user.name}", '#')  %>
+            <% else %>
+              <%= content_tag :td, link_to("Disponível", '#'),
+                class: "wday-#{wday} hour-#{hour}",
+                onclick: 'reserve(this)',
+                data: { wday: wday, hour: hour } %>
+            <% end %>
           <% end %>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-</div>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<script>
-function reserve(li) {
-  $.post('/scheduler', $(li).data(), function(json) {
-    $(li).find('a').html(json.message);
-  }, 'json');
-}
-</script>
+  <script>
+  function reserve(li) {
+    $.post('/scheduler', $(li).data(), function(json) {
+      $(li).find('a').html(json.message);
+    }, 'json');
+  }
+  </script>
+</div>

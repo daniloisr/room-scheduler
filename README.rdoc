@@ -1,28 +1,15 @@
-== README
+= Reserva de Sala
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Sistema simples para reserva de sala *uma* sala de reunião.
 
-Things you may want to cover:
+== Para executar
 
-* Ruby version
+$ bundle install
+$ bin/rake db:create db:migrate
 
-* System dependencies
+$ bin/rails server
+$ bin/rake # to run tests
 
-* Configuration
+== TODO
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* seed
