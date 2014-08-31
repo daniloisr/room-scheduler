@@ -20,4 +20,24 @@ describe Schedule do
     schedule.finish = DateTime.now.end_of_week + 1.hour
     expect(schedule).to_not be_valid()
   end
+
+  it 'scope by day' do
+    begin_week = DateTime.now.beginning_of_week
+    s1 = create(:schedule, init: begin_week)
+    s2 = create(:schedule, init: begin_week + 1.day)
+
+    expect(Schedule.by_day(begin_week)).to include(s1)
+    expect(Schedule.by_day(begin_week)).to_not include(s2)
+  end
+
+  it 'scopes by week' do
+    begin_week = DateTime.now.beginning_of_week
+    s1 = create(:schedule, init: begin_week)
+    # creates s2 in another week, so we need to bypass validation
+    s2 = build(:schedule, init: begin_week + 8.day)
+    s2.save(validate: false)
+
+    expect(Schedule.by_week(begin_week)).to include(s1)
+    expect(Schedule.by_week(begin_week)).to_not include(s2)
+  end
 end
