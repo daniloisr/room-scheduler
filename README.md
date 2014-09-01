@@ -4,11 +4,11 @@ Sistema simples para reserva de sala *uma* sala de reunião.
 
 == Para executar
 
-$ bundle install
-$ bin/rake db:create db:migrate
+    $ bundle install
+    $ bin/rake db:create db:migrate
 
-$ bin/rails server
-$ bin/rake # to run tests
+    $ bin/rails server
+    $ bin/rake # to run tests
 
 == Observações
 
