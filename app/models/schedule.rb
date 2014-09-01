@@ -33,7 +33,7 @@ class Schedule < ActiveRecord::Base
   scope :in_current_week, -> { by_week(DateTime.now) }
 
   scope :by_hour, ->(hour) {
-    where("strftime('%H', init) = ?", "%02d" % (hour - DateTime.now.zone.to_i))
+    where("extract(hour from init) = ?", "%02d" % (hour - DateTime.now.zone.to_i))
   }
 
   scope :by_week, ->(dtime) {
