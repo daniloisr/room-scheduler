@@ -9,15 +9,16 @@ class SchedulersController < ApplicationController
 
     if schedule.save
       respond_to do |format|
-        # TODO: better notice
-        format.html { redirect_to :show, notice: 'created' }
+        format.html { redirect_to :show, notice: 'Reserva criada com sucesso' }
         format.json { render json: { message: "Reservado por #{current_user.name}" } }
       end
     else
+      # TODO: tratar quando já existir uma reservar neste horário
       raise NotImplementedError
     end
   end
 
+  # TODO: remover um agendamento
   def destroy
   end
 end
