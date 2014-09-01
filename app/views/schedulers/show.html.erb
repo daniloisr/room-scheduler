@@ -3,7 +3,7 @@
 
   <h1>Reserva de Sala</h1>
 
-  <table class="table table-striped">
+  <table class="table table-striped scheduler">
     <thead>
       <th><%= t('.time') %></th>
       <% Week.available_days.each do |wday| %>
@@ -18,13 +18,13 @@
 
           <% Week.available_days.each do |wday| %>
             <% schedule = Schedule.by_day(
-              Week.init.beginning_of_week + (wday - 1)).
+              Week.init + (wday - 1)).
               by_hour(hour) %>
 
             <% if schedule.any? %>
               <%= content_tag :td, content_tag(:span, "Reservado por #{schedule.first. user.name}", class: "label label-#{schedule.first.user == current_user ? 'success' : 'warning'}")  %>
             <% else %>
-              <%= content_tag :td, link_to(content_tag(:span, "Disponível", class: " label label-info"), '#'),
+              <%= content_tag :td, link_to("Disponível", '#'),
                 class: "wday-#{wday} hour-#{hour}",
                 onclick: 'reserve(this)',
                 data: { wday: wday, hour: hour } %>
@@ -38,7 +38,7 @@
   <script>
   function reserve(li) {
     $.post('/scheduler', $(li).data(), function(json) {
-      $(li).find('a').html(json.message);
+      $(li).html($('<span class="label label-success">').html(json.message));
     }, 'json');
   }
   </script>

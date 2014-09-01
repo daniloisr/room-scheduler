@@ -7,7 +7,7 @@ class Schedule < ActiveRecord::Base
 
   validate :valid_time
 
-  # TODO i18n errors messages
+  # TODO: i18n errors messages
   def valid_time
     return if init.nil? || finish.nil?
     if init < Week.init || init > Week.finish
@@ -26,7 +26,7 @@ class Schedule < ActiveRecord::Base
   scope :in_current_week, -> { by_week(DateTime.now) }
 
   scope :by_hour, ->(hour) {
-    where("strftime('%H', init) = ?", "%02d" % hour)
+    where("strftime('%H', init) = ?", "%02d" % (hour - DateTime.now.zone.to_i))
   }
 
   scope :by_week, ->(dtime) {

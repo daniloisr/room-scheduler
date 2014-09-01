@@ -203,3 +203,11 @@ pt-BR:
       short: ! '%d de %B, %H:%M'
       day_month: ! '%d/%m'
     pm: ''
+  activerecord:
+    models:
+      user: Usuário
+    attributes:
+      user:
+        name: Nome
+        login: Login
+        password: Senha

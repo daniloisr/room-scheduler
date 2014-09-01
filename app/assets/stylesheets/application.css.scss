@@ -16,3 +16,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap/_theme";
 @import "bootstrap";
+
+table.scheduler {
+  th, td { text-align: center; }
+}
