@@ -6,25 +6,25 @@
   <table class="table table-striped">
     <thead>
       <th><%= t('.time') %></th>
-      <% (1..5).each do |wday| %>
-        <%= content_tag :th, t('date.day_names')[wday] %>
+      <% Week.available_days.each do |wday| %>
+        <%= content_tag :th, weekday(wday) %>
       <% end %>
     </thead>
 
     <tbody>
-      <% (6..23).each do |hour| %>
+      <% Week.available_hours.each do |hour| %>
         <tr>
           <%= content_tag :td, "%02d:00" % hour %>
 
-          <% (1..5).each do |wday| %>
+          <% Week.available_days.each do |wday| %>
             <% schedule = Schedule.by_day(
-              Schedule.new.beginning_of_week + (wday - 1)).
+              Week.init.beginning_of_week + (wday - 1)).
               by_hour(hour) %>
 
             <% if schedule.any? %>
-              <%= content_tag :td, link_to("Reservado por #{schedule.first. user.name}", '#')  %>
+              <%= content_tag :td, content_tag(:span, "Reservado por #{schedule.first. user.name}", class: "label label-#{schedule.first.user == current_user ? 'success' : 'warning'}")  %>
             <% else %>
-              <%= content_tag :td, link_to("Disponível", '#'),
+              <%= content_tag :td, link_to(content_tag(:span, "Disponível", class: " label label-info"), '#'),
                 class: "wday-#{wday} hour-#{hour}",
                 onclick: 'reserve(this)',
                 data: { wday: wday, hour: hour } %>
