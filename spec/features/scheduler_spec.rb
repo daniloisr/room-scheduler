@@ -16,10 +16,7 @@ describe 'Scheduler Screen' do
     expect(page).to have_content("Reservado por #{user.name}")
   end
 
-  scenario "user can cancel a schedule", js: true do
-    schedule = create(:schedule, user: user)
-    login(user)
-  end
+  scenario "user can cancel a schedule"
 
   scenario "shows schedules of another user" do
     schedule = create(:schedule, user: create(:user))

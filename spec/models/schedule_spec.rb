@@ -4,7 +4,7 @@ describe Schedule do
   let(:user) { build(:user) }
 
   it 'validadetes date params on creation' do
-    init = Week.init + 1.hour
+    init = Week.init
     finish = init + 1.hour
 
     schedule = Schedule.new(user: user, init: init, finish: finish)
@@ -19,6 +19,14 @@ describe Schedule do
     schedule.init = init
     schedule.finish = Week.finish + 1.hour
     expect(schedule).to_not be_valid()
+  end
+
+  it 'validates already taken schedule' do
+    schedule = create(:schedule)
+    schedule2 = schedule.dup
+
+    expect(schedule2).to_not be_valid()
+    expect(schedule2.errors.full_messages.first).to eq('Já existe uma reserva para esse horário')
   end
 
   it 'scope by day' do

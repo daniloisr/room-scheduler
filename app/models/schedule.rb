@@ -5,7 +5,7 @@ class Schedule < ActiveRecord::Base
   validates :init, presence: true
   validates :finish, presence: true
 
-  validate :valid_time
+  validate :valid_time, :exclusive_schedule
 
   # TODO: i18n errors messages
   def valid_time
@@ -16,6 +16,13 @@ class Schedule < ActiveRecord::Base
       errors.add(:finish, "Deve ser no périodo desta semana")
     elsif finish < init
       errors.add(:finish, "Deve ser maior que a data de início")
+    end
+  end
+
+  # Verify if exists a schedule for the given interval
+  def exclusive_schedule
+    if Schedule.where('init >= ? AND init <= ?', init, finish).any?
+      errors.add(:base, "Já existe uma reserva para esse horário")
     end
   end
 
@@ -38,6 +45,6 @@ class Schedule < ActiveRecord::Base
   before_validation :set_finish_time
 
   def set_finish_time
-    self.finish = init + 1.hour if !init.nil? && finish.nil?
+    self.finish = init + 59.minutes if !init.nil? && finish.nil?
   end
 end
