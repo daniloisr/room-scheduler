@@ -10,6 +10,6 @@ $ bin/rake db:create db:migrate
 $ bin/rails server
 $ bin/rake # to run tests
 
-== TODO
+== Observações
 
-* seed
+* O modelo `Schedule` (responsável por um agendamento na sala) possui a data final (`finish`) que é definida como 1 hora a mais. Assim a reserva pode ocorrer em um intervalo. Talvez nem fosse preciso esse atributo, mas ele pode ser útil para uma lógica mais complexa.
