@@ -8,10 +8,7 @@ describe 'Scheduler Screen' do
 
     visit scheduler_path
     expect(page).to have_content("Reserva")
-
-    expect { Schedule.count
-      find('.wday-1.hour-6').click_link("Disponível")
-     }.to change{ Schedule.count }.by(1)
+    find('.wday-1.hour-6').click_link("Disponível")
 
     expect(page).to have_content("Reservado por #{user.name}")
   end
