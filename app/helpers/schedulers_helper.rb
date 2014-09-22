@@ -7,9 +7,15 @@ module SchedulersHelper
   end
 
   def schedule_label(schedule)
-    klass = schedule.user == current_user ? 'success' : 'warning'
-    content_tag(:span,
-      "Reservado por #{schedule.user.name}",
-      class: "label label-#{klass}").html_safe
+    if schedule.user == current_user
+      link_to("Reservado por #{schedule.user.name}",
+        "#",
+        data: { id: schedule.id },
+        class: "label label-success cancelable").html_safe
+    else
+      content_tag(:span,
+        "Reservado por #{schedule.user.name}",
+        class: "label label-warning").html_safe
+    end
   end
 end

@@ -12,4 +12,16 @@ $(function() {
 
     ev.preventDefault();
   });
+
+  $('.scheduler .cancelable').on('click', function(ev) {
+    var element = $(this),
+        data = element.data();
+
+    data._method = 'delete';
+    $.post('/scheduler', data, function(json) {
+      element.html(json.newElement);
+    }, 'json');
+
+    ev.preventDefault();
+  });
 });
